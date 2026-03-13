@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - EcoleDirecte</title>
+    <style>
+        :root {
+            --primary-blue: #0076bb;
+            --button-blue: #0093d3;
+            --bg-blue: #05599c;
+            --text-gray: #757575;
+            --border-color: #e0e0e0;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* --- Côté Gauche (Blanc) --- */
+        .login-sidebar {
+            width: 350px;
+            background-color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo-container img {
+            width: 180px;
+        }
+
+        .login-form h1 {
+            color: var(--primary-blue);
+            font-weight: normal;
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+            color: var(--text-gray);
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-blue);
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-gray);
+            font-style: italic;
+            margin-top: -15px;
+            margin-bottom: 20px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .remember-me input {
+            margin-right: 10px;
+        }
+
+        .btn-connexion {
+            width: 100%;
+            background-color: var(--button-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-connexion:hover {
+            background-color: #007bb1;
+        }
+
+        .footer-links {
+            font-size: 12px;
+            color: #333;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #333;
+            margin-right: 15px;
+        }
+
+        /* Onglet vertical "Problème de connexion" */
+        .problem-tab {
+            position: absolute;
+            right: -31px;
+            top: 350px;
+            background: white;
+            padding: 10px 15px;
+            transform: rotate(-90deg);
+            transform-origin: top right;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        /* --- Côté Droit (Bleu) --- */
+        .main-content {
+            flex-grow: 1;
+            background-color: var(--bg-blue);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+
+        .mobile-promo {
+            text-align: center;
+        }
+
+        .mobile-promo p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .app-badges img {
+            height: 45px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .fn-key {
+            position: absolute;
+            bottom: 40px;
+            background: #d1d5db;
+            color: #4b5563;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 0 #9ca3af;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content { display: none; }
+            .login-sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <aside class="login-sidebar">
+       <div class="logo-container">
+    <img src="https://www.ecoledirecte.com/assets/images/logoEcoleDirecte.png"  alt="EcoleDirecte">
+    <h1>EcoleDirecte </h1>
+</div>
+
+        <div class="login-form">
+            <h1>Connectez-vous</h1>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" name="identifiant" placeholder="Identifiant" required>
+                </div>
+                
+                <div class="input-group">
+                    <input type ="password" name="mot_de_passe" placeholder="Mot de passe">
+                    <span class="eye-icon">👁️</span>
+                </div>
+
+                <a href="{% url 'forgot_password' %}" class="forgot-password">Mot de passe oublié ?</a>
+
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Se souvenir de moi</label>
+                </div>
+
+                <button type="submit" class="btn-connexion">Connexion</button>
+            </form>
+        </div>
+
+        <div class="footer-links">
+            <a href="#">Mentions légales</a>
+            <a href="#">Accessibilité</a>
+        </div>
+
+        <div class="problem-tab">
+            Problème de connexion ?
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="mobile-promo">
+            <p>Retrouvez EcoleDirecte aussi sur votre mobile</p>
+            <div class="app-badges">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
+            </div>
+        </div>
+
+        
+    </main>
+</div>
+
+</body>
+</html>
